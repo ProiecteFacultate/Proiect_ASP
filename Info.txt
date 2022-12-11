@@ -1,0 +1,8 @@
+Controlore:
+
+- Home
+- Profile
+- Friends List (pt un user)
+- Group List  (pt un user)
+- SearchMenu
+- Group 
