@@ -36,12 +36,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Home/Feed.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGZWVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Profile/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Profile/Show.cshtml]

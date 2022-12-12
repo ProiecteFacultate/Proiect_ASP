@@ -4,5 +4,8 @@
 
 <div class="text-center">
     <h1 class="display-4">Profile/Show</h1>
-    <p>User id: @ViewBag.CurrentUser</p>
+    <p>Profile Username: @ViewBag.ProfileUsername</p>
+    <p>Description: @ViewBag.Description</p>
+
+    <a class="btn btn-outline-success" href="/Profile/Edit/@ViewBag.ProfileUserId">Edit Profile</a>
 </div>

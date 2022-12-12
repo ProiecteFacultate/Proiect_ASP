@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Proiect.Data;
 using Proiect.Models;
+using System.Security.Policy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,8 +47,24 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "Show Profile",
+    pattern: "Profile/Show/{profileUserId}",
+    defaults: new { controller = "Profile", action = "Show" });
+
+app.MapControllerRoute(
+    name: "Edit Profile",
+    pattern: "Profile/Show/{profileUserId}",
+    defaults: new { controller = "Profile", action = "Show" });
+
+app.MapControllerRoute(
+    name: "Edit Profile Post",
+    pattern: "Profile/Show/{profileUserId}/{updatedProfile}",
+    defaults: new { controller = "Profile", action = "Show" });
+
+app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Feed}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();

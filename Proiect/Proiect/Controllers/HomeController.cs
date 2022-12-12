@@ -25,9 +25,9 @@ namespace Proiect.Controllers
         }
 
 
-        [Authorize(Roles = "User,Editor,Admin")]
-        public IActionResult Index()
+        public IActionResult Feed()
         {
+            ViewBag.ProfileUserId = _userManager.GetUserId(User);
             return View();
         }
 

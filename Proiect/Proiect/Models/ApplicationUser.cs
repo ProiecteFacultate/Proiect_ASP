@@ -4,7 +4,6 @@ namespace Proiect.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public string? ProfileUsername { get; set; }
-        public string? Description { get; set; }
+        public virtual Profile? UserProfile { get; set; }
     }
 }
