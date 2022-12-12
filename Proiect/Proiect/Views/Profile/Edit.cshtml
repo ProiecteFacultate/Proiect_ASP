@@ -7,7 +7,7 @@
         <div class="col-md-6 offset-3">
             @using (Html.BeginForm(actionName: "Edit", controllerName: "Profile",
             method: FormMethod.Post,
-            routeValues: new { profileUserId = @ViewBag.ProfileUserId }))
+            routeValues: new { id = Model.Id }))  //we have id here because it should match with model attribute, id
             {
                 /* @Html.HiddenFor(m => m.Id)  */
 
@@ -35,5 +35,6 @@
             }
         </div>
     </div>
+ 
 </div>
 

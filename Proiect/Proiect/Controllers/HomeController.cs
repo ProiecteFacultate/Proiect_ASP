@@ -27,7 +27,7 @@ namespace Proiect.Controllers
 
         public IActionResult Feed()
         {
-            ViewBag.ProfileUserId = _userManager.GetUserId(User);
+            ViewBag.Id = _userManager.GetUserId(User);            //the id of the profile, which in this case is also our user id
             return View();
         }
 

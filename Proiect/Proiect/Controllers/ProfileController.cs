@@ -26,61 +26,66 @@ namespace Proiect.Controllers
             _roleManager = roleManager;
         }
 
-        public IActionResult Show(string profileUserId)   //this is the id for the user who got the visited profile; which can or not be the same user from _userManager (is different when we visit other people profile)
+        public IActionResult Show(string id)   //this is the id for the user who got the visited profile; which can or not be the same user from _userManager (is different when we visit other people profile)
         {
-            if (profileExists(profileUserId) == false)
-                createProfile(profileUserId);
+            if (profileExists(id) == false)
+                createProfile(id);
                 
 
             string profileUsername = (from profile in db.Profiles
-                                      where profile.Id == profileUserId
+                                      where profile.Id == id
                                       select profile.ProfileUsername).SingleOrDefault();
 
             string description = (from profile in db.Profiles
-                                  where profile.Id == profileUserId
+                                  where profile.Id == id
                                   select profile.Description).SingleOrDefault();
 
-            ViewBag.ProfileUserId = profileUserId;
+            ViewBag.ProfileUserId = id;
             ViewBag.ProfileUsername = profileUsername;
             ViewBag.Description = description;
-
-            ViewBag.ProfileUserId = profileUserId;
+            ViewBag.Id = id;
 
             return View();
         }
 
-        public IActionResult Edit(string profileUserId)
+        public IActionResult Edit(string id)
         {
-            ViewBag.ProfileUserId = profileUserId;
-            return View();
+            Profile profile = (from profile2 in db.Profiles
+                               where profile2.Id == id
+                               select profile2).SingleOrDefault();
+
+            return View(profile);
         }
 
         [HttpPost]
-        public IActionResult Edit(string profileUserId, Profile updatedProfile)
+        public IActionResult Edit(string id, Profile updatedProfile)       
         {
-            Profile profile = db.Profiles.Find(profileUserId);
-            Console.WriteLine("Nume actual: " + updatedProfile.ProfileUsername);
-
-            if(ModelState.IsValid)
+            Profile profile = db.Profiles.Find(id);
+        
+            if (ModelState.IsValid)
             {
-                Console.WriteLine("New name: " + updatedProfile.ProfileUsername);
-                Console.WriteLine("New desc: " + updatedProfile.Description);
+                Console.WriteLine("Model valid");
 
                 profile.ProfileUsername = updatedProfile.ProfileUsername;
                 profile.Description = updatedProfile.Description;
-                db.SaveChanges();       
+                db.SaveChanges();
+
+                return RedirectToAction("Show", new { id = id });
             }
-            string profileUserId2 = profileUserId;
-            return RedirectToAction("Show", new { profileUserId  = profileUserId2 });
+            else
+            {
+                Console.WriteLine("Model invalid");
+                return View(updatedProfile);
+            }
         }
 
-        bool profileExists(string profileUserId)       //checks if profile already exists for the given user;   returns true if profile exists, false otherwise
+        bool profileExists(string id)       //checks if profile already exists for the given user;   returns true if profile exists, false otherwise
         {
-            string id = (from profile in db.Profiles
-                         where profile.Id == profileUserId
-                         select profile.Id).SingleOrDefault();
+            string profileId = (from profile in db.Profiles
+                                where profile.Id == id
+                                select profile.Id).SingleOrDefault();
 
-            if (id == null)
+            if (profileId == null)
             {
                 Console.WriteLine("Profile doesn't exist!");
                 return false;
@@ -92,10 +97,10 @@ namespace Proiect.Controllers
             }
         }
 
-        void createProfile(string profileUserId)
+        void createProfile(string id)
         {
             Profile profile = new Profile();
-            profile.Id = profileUserId;
+            profile.Id = id;
             profile.ProfileUsername = "Username Unset";
             profile.Description = "Description";
 

@@ -48,18 +48,18 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "Show Profile",
-    pattern: "Profile/Show/{profileUserId}",
+    pattern: "Profile/Show/{id}",
     defaults: new { controller = "Profile", action = "Show" });
 
 app.MapControllerRoute(
     name: "Edit Profile",
-    pattern: "Profile/Show/{profileUserId}",
-    defaults: new { controller = "Profile", action = "Show" });
+    pattern: "Profile/Edit/{id}",
+    defaults: new { controller = "Profile", action = "Edit" });
 
 app.MapControllerRoute(
     name: "Edit Profile Post",
-    pattern: "Profile/Show/{profileUserId}/{updatedProfile}",
-    defaults: new { controller = "Profile", action = "Show" });
+    pattern: "Profile/Edit/{id}/{updatedProfile}",
+    defaults: new { controller = "Profile", action = "Edit" });
 
 app.MapControllerRoute(
     name: "default",
