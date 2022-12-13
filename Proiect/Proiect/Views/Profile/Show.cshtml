@@ -1,11 +1,66 @@
 ﻿@{
     ViewData["Title"] = "Profile Page";
+    @model Proiect.Models.Post
 }
 
 <div class="text-center">
     <h1 class="display-4">Profile/Show</h1>
     <p>Profile Username: @ViewBag.ProfileUsername</p>
-    <p>Description: @ViewBag.Description</p>
 
-    <a class="btn btn-outline-success" href="/Profile/Edit/@ViewBag.Id">Edit Profile</a>
+    @if (ViewBag.Privacy == true || ((ViewBag.CurrentUser == ViewBag.Id) || ViewBag.Role == "Admin"))
+    {
+        <p>Description: @ViewBag.Description</p>
+
+        @if (ViewBag.Authenticated == true && ((ViewBag.CurrentUser == ViewBag.Id) || ViewBag.Role == "Admin"))  //ViewBag.Id is the id of the profile, ViewBag.CurrentUser is the id of the user who visits the profile
+        {
+            <a class="btn btn-outline-success" href="/Profile/Edit/@ViewBag.Id">Edit Profile</a>
+        }
+
+        @if (ViewBag.Authenticated == true && (ViewBag.CurrentUser == ViewBag.Id))         // add post
+        {
+            <a class="btn btn-outline-success" href="/Profile/NewPost">Add Post</a>
+        }
+
+        <br />
+        <br />
+        <br />
+
+        <h2>Posts</h2>
+
+        <br />
+        <br />
+
+
+        @foreach (var post in ViewBag.Posts)           //display posts
+        {
+            <div class="card">
+                <div class="card-body">
+
+
+                    <h3 class="card-title alert-success py-3 px-3 rounded-2">@post[1]</h3>       <!--Post Creator Username-->
+
+                    <div class="card-text">@post[0]</div>       <!--Post Body-->
+
+                    <div class="d-flex justify-content-between flex-row mt-5">
+
+                        <span class="alert-success">@post[2]</span>              <!--Post Posted Date-->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <br />
+            <br />
+        }
+    }
+    else
+    {
+        <br />
+        <br />
+
+        <h2>This profile is private!</h2>
+    }
+
 </div>

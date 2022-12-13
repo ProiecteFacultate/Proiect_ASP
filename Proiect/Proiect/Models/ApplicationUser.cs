@@ -5,5 +5,9 @@ namespace Proiect.Models
     public class ApplicationUser : IdentityUser
     {
         public virtual Profile? UserProfile { get; set; }
+
+        public virtual ICollection<Friendship>? FriendShips { get; set; }
+
+        public virtual ICollection<Post>? Posts { get; set; }
     }
 }

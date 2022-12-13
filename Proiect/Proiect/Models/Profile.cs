@@ -14,7 +14,10 @@ namespace Proiect.Models
         [StringLength(20, ErrorMessage = "The username should be shorter than 100 characters")]
         [MinLength(3, ErrorMessage = "The username should be longer than 3 characters")]
         public string? ProfileUsername { get; set; }
+
         public string? Description { get; set; }
+
+        public bool? Visible { get; set; }              //True if Public; False if Private
 
         public virtual ApplicationUser? ApplicationUser { get; set; }
     }

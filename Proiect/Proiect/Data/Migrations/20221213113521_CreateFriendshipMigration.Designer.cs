@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proiect.Data;
 
@@ -11,9 +12,10 @@ using Proiect.Data;
 namespace Proiect.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221213113521_CreateFriendshipMigration")]
+    partial class CreateFriendshipMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,32 +256,6 @@ namespace Proiect.Data.Migrations
                     b.ToTable("Friendships");
                 });
 
-            modelBuilder.Entity("Proiect.Models.Post", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DatePosted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.ToTable("Posts");
-                });
-
             modelBuilder.Entity("Proiect.Models.Profile", b =>
                 {
                     b.Property<string>("Id")
@@ -292,9 +268,6 @@ namespace Proiect.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<bool?>("Visible")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -366,15 +339,6 @@ namespace Proiect.Data.Migrations
                         .HasForeignKey("ApplicationUserId");
                 });
 
-            modelBuilder.Entity("Proiect.Models.Post", b =>
-                {
-                    b.HasOne("Proiect.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Posts")
-                        .HasForeignKey("CreatorId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
             modelBuilder.Entity("Proiect.Models.Profile", b =>
                 {
                     b.HasOne("Proiect.Models.ApplicationUser", "ApplicationUser")
@@ -389,8 +353,6 @@ namespace Proiect.Data.Migrations
             modelBuilder.Entity("Proiect.Models.ApplicationUser", b =>
                 {
                     b.Navigation("FriendShips");
-
-                    b.Navigation("Posts");
 
                     b.Navigation("UserProfile");
                 });

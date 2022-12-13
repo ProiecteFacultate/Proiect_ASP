@@ -1,11 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    @model Proiect.Models.Post
 }
 
 <div class="text-center">
     <h1 class="display-4">Home/Index</h1>
-    @if (ViewBag.Authenticated == true)
+    @if (ViewBag.Authenticated == true)           
     {
         <a class="btn btn-outline-success" href="/Profile/Show/@ViewBag.Id">To Profile/Show</a>
+
+        <br />
+        <br />
+        <h3>Friends</h3>
+
+        <br />
+        @foreach (var friend in ViewBag.Friends)       //ViewBag.Friends is an ArrayList of ArrayLists, so var friend is an ArrayList, but in Razor we don't have Arraylists so we use var
+        {
+             <a class="btn btn-outline-success" href="/Profile/Show/@friend[0]">@friend[1]</a>
+             <br />
+        }
     }
 </div>

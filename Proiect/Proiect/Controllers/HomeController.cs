@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Proiect.Data;
 using Proiect.Models;
+using System.Collections;
 using System.Data;
 using System.Diagnostics;
 
@@ -29,12 +30,14 @@ namespace Proiect.Controllers
         {
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
+                string id = _userManager.GetUserId(User);         
                 ViewBag.Authenticated = true;
-                ViewBag.Id = _userManager.GetUserId(User);            //the id of the profile, which in this case is also our user id
+                ViewBag.Id = id;
+                ViewBag.Friends = getFriendshipsData(id);
             }
             else
                 ViewBag.Authenticated = false;
-            
+
             return View();
         }
 
@@ -47,6 +50,44 @@ namespace Proiect.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+
+        //Methods
+
+        ArrayList getFriendshipsData(string id)
+        {
+            ArrayList friendsId = new ArrayList();
+            ArrayList friendsData = new ArrayList();      //id, profile username
+
+            var query1 = (from friendship in db.Friendships
+                          where friendship.Friend_1_Key == id
+                          select friendship.Friend_2_Key);
+
+            var query2 = (from friendship in db.Friendships
+                          where friendship.Friend_2_Key == id
+                          select friendship.Friend_1_Key);
+
+            foreach (var friend in query1)
+                friendsId.Add(friend);
+
+            foreach (var friend in query2)
+                friendsId.Add(friend);
+
+            for(int i = 0; i < friendsId.Count; i++)
+            {
+                var username = (from profile in db.Profiles
+                                where profile.Id == friendsId[i]
+                                select profile.ProfileUsername).SingleOrDefault();
+
+                ArrayList data = new ArrayList();
+                data.Add(friendsId[i]);
+                data.Add(username.ToString());
+                friendsData.Add(data);
+            }
+
+            return friendsData;
         }
     }
 }

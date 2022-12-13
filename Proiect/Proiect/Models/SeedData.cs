@@ -1,7 +1,6 @@
 ﻿using Proiect.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Proiect.Data;
 using Proiect.Models;
 
 // PASUL 4 - useri si roluri
