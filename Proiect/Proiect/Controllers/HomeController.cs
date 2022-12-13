@@ -27,7 +27,14 @@ namespace Proiect.Controllers
 
         public IActionResult Feed()
         {
-            ViewBag.Id = _userManager.GetUserId(User);            //the id of the profile, which in this case is also our user id
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                ViewBag.Authenticated = true;
+                ViewBag.Id = _userManager.GetUserId(User);            //the id of the profile, which in this case is also our user id
+            }
+            else
+                ViewBag.Authenticated = false;
+            
             return View();
         }
 

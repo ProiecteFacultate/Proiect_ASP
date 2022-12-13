@@ -61,6 +61,11 @@ app.MapControllerRoute(
     pattern: "Profile/Edit/{id}/{updatedProfile}",
     defaults: new { controller = "Profile", action = "Edit" });
 
+app.MapControllerRoute(      //this is because when you log out it send you to Home/Index, but we replaced Home/Index to Home/Feed in the project
+    name: "Home Index",
+    pattern: "Home/Index",
+    defaults: new { controller = "Home", action = "Feed" });
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Feed}/{id?}");

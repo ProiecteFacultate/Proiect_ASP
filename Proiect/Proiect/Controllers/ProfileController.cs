@@ -69,7 +69,7 @@ namespace Proiect.Controllers
                 profile.ProfileUsername = updatedProfile.ProfileUsername;
                 profile.Description = updatedProfile.Description;
                 db.SaveChanges();
-
+                
                 return RedirectToAction("Show", new { id = id });
             }
             else
