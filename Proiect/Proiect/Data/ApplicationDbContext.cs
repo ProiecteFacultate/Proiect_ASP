@@ -18,5 +18,7 @@ namespace Proiect.Data
         public DbSet<Friendship> Friendships { get; set; }
 
         public DbSet<Post> Posts { get; set; }
+
+        public DbSet<Post_Comment> Post_Comments { get; set; }
     }
 }

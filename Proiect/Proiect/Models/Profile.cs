@@ -17,8 +17,11 @@ namespace Proiect.Models
 
         public string? Description { get; set; }
 
-        public bool? Visible { get; set; }              //True if Public; False if Private
+        public string? Privacy { get; set; }             
 
         public virtual ApplicationUser? ApplicationUser { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem>? Priv { get; set; }
     }
 }

@@ -30,8 +30,10 @@
 
                 <br />
 
-                <label>Private Profile  </label>
-            //    @Html.CheckBoxFor(model => model.Visible)
+                <label>Choose Privacy</label>
+                @Html.DropDownListFor(m => m.Privacy, new SelectList(Model.Priv, "Value", "Text"),
+                "Select Privacy", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Privacy, null, new { @class = "text-danger" })
 
                 <br />
                 <br />

@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Hosting;
 using Proiect.Data;
 using Proiect.Models;
 using System;
 using System.Collections;
 using System.Data;
 using System.Diagnostics;
+using System.Xml.Linq;
 
 
 namespace Proiect.Controllers
@@ -53,19 +56,28 @@ namespace Proiect.Controllers
             ViewBag.Id = id;            //the id of the requested profile, not hte one of the user that visits the profile
             ViewBag.ProfileUsername = profile.ProfileUsername.ToString();
             ViewBag.Description = profile.Description.ToString();
-            ViewBag.Privacy = profile.Visible;
+            ViewBag.Privacy = profile.Privacy;
             ViewBag.posts = getPosts(id);
 
             return View();
         }
 
-        public IActionResult Edit(string id)
+        public IActionResult Edit(string id)          
         {
-            Profile profile = (from profile2 in db.Profiles
-                               where profile2.Id == id
-                               select profile2).SingleOrDefault();
+            if (id == _userManager.GetUserId(User))
+            {
+                Profile profile = (from profile2 in db.Profiles
+                                   where profile2.Id == id
+                                   select profile2).SingleOrDefault();
 
-            return View(profile);
+                profile.Priv = getPrivacyOptions();
+                return View(profile);
+            }
+            else
+            {
+                TempData["message"] = "You can't edit this profile!";
+                return RedirectToAction("Warning", "Home");
+            }
         }
 
         [HttpPost]
@@ -75,45 +87,27 @@ namespace Proiect.Controllers
         
             if (ModelState.IsValid)
             {
-                Console.WriteLine("Model valid");
-
-                profile.ProfileUsername = updatedProfile.ProfileUsername;
-                profile.Description = updatedProfile.Description;
-                db.SaveChanges();
-                
-                return RedirectToAction("Show", new { id = id });
+                if (profile.Id == _userManager.GetUserId(User))
+                {
+                    profile.ProfileUsername = updatedProfile.ProfileUsername;
+                    profile.Description = updatedProfile.Description;
+                    profile.Privacy = updatedProfile.Privacy;
+                    db.SaveChanges();
+                    return RedirectToAction("Show", new { id = id });
+                }
+                else
+                {
+                    TempData["message"] = "You can't edit this profile!";
+                    return RedirectToAction("Warning", "Home");
+                }
             }
             else
             {
                 Console.WriteLine("Model invalid");
+                profile.Priv = getPrivacyOptions();
                 return View(updatedProfile);
             }
-        }
-
-        public IActionResult NewPost()
-        {
-            Post post = new Post();
-
-            return View(post);
-        }
-
-        [HttpPost]
-        public IActionResult NewPost(Post newPost)
-        {
-            newPost.DatePosted = DateTime.Now;
-            newPost.CreatorId = _userManager.GetUserId(User);
-
-            if (ModelState.IsValid)
-            {
-                db.Posts.Add(newPost);
-                db.SaveChanges();
-                return RedirectToAction("Show", new {id = _userManager.GetUserId(User)});
-            }
-            else
-            {
-                return View(newPost);
-            }
-        }
+        }     
 
         bool profileExists(string id)       //checks if profile already exists for the given user;   returns true if profile exists, false otherwise
         {
@@ -139,13 +133,13 @@ namespace Proiect.Controllers
             profile.Id = id;
             profile.ProfileUsername = "Username Unset";
             profile.Description = "Description";
-            profile.Visible = true;
+            profile.Privacy = "Public";
 
             db.Profiles.Add(profile);
             db.SaveChanges();
         }
 
-        ArrayList getPosts(string id)          //the id of the profile 
+        ArrayList getPosts(string id)          //the id of the profile; it gets also the comments for every post
         {
             ArrayList posts = new ArrayList();
 
@@ -156,19 +150,63 @@ namespace Proiect.Controllers
             foreach (var post in query)
             {
                 ArrayList aux = new ArrayList();
-                
+                ArrayList comments = new ArrayList();
+
                 var creatorUsername = (from profile in db.Profiles
                                        where profile.Id == post.CreatorId
                                        select profile.ProfileUsername).SingleOrDefault();
 
-                aux.Add(post.Message.ToString());
-                aux.Add(creatorUsername.ToString());
-                aux.Add(post.DatePosted);
+                //now we get the comments for the post
 
+                var query2 = (from post_comment in db.Post_Comments
+                              where post_comment.PostId == post.Id
+                              select post_comment);
+
+                foreach(var comment in query2)
+                {
+                    var commentCreatorUsername = (from profile in db.Profiles
+                                                  where profile.Id == comment.CreatorId
+                                                  select profile.ProfileUsername).SingleOrDefault();
+
+                    ArrayList aux2 = new ArrayList();
+
+                    aux2.Add(comment.Id);
+                    aux2.Add(commentCreatorUsername.ToString());
+                    aux2.Add(comment.Message.ToString());
+                    aux2.Add(comment.DatePosted);
+                    aux2.Add(comment.CreatorId);
+
+                    comments.Add(aux2);
+                }
+
+                aux.Add(post.Id);
+                aux.Add(creatorUsername.ToString());
+                aux.Add(post.Message.ToString());
+                aux.Add(post.DatePosted);
+                aux.Add(comments);
                 posts.Add(aux);
             }
 
             return posts;
+        }
+
+        IEnumerable<SelectListItem> getPrivacyOptions()
+        {
+            var optionsList = new List<SelectListItem>();
+
+            optionsList.Add(new SelectListItem
+            {
+                Value = "Public",
+                Text = "Public"
+            });
+
+            optionsList.Add(new SelectListItem
+            {
+                Value = "Private",
+                Text = "Private"
+            });
+
+            return optionsList;
         }
     }
 }

@@ -44,12 +44,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Profile/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxFZGl0LmNzaHRtbA==
+[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Home/Warning.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxXYXJuaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Profile/NewPost.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxOZXdQb3N0LmNzaHRtbA==
+[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/PostComment/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdENvbW1lbnRcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/PostComment/NewComment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdENvbW1lbnRcTmV3Q29tbWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Post/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Post/NewPost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdFxOZXdQb3N0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Profile/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Facultate/II/ASP/Proiect_ASP/Proiect/Proiect/Views/Profile/Show.cshtml]

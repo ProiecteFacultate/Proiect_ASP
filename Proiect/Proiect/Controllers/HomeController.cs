@@ -41,6 +41,16 @@ namespace Proiect.Controllers
             return View();
         }
 
+        public IActionResult Warning()
+        {
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.Message = TempData["message"];
+            }
+
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

@@ -17,5 +17,7 @@ namespace Proiect.Models
         public DateTime DatePosted { get; set; }
 
         public virtual ApplicationUser? ApplicationUser { get; set; }
+
+        public virtual ICollection<Post_Comment>? Post_Comments { get; set; }
     }
 }
