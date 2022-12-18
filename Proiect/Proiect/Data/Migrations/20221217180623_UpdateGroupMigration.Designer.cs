@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proiect.Data;
 
@@ -11,9 +12,10 @@ using Proiect.Data;
 namespace Proiect.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221217180623_UpdateGroupMigration")]
+    partial class UpdateGroupMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,10 +290,6 @@ namespace Proiect.Data.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -302,40 +300,6 @@ namespace Proiect.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Group_Members");
-                });
-
-            modelBuilder.Entity("Proiect.Models.Group_Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DatePosted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("Group_Messages");
                 });
 
             modelBuilder.Entity("Proiect.Models.Post", b =>
@@ -496,21 +460,6 @@ namespace Proiect.Data.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("Proiect.Models.Group_Message", b =>
-                {
-                    b.HasOne("Proiect.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
-
-                    b.HasOne("Proiect.Models.Group", "Group")
-                        .WithMany("Group_Messages")
-                        .HasForeignKey("GroupId");
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Group");
-                });
-
             modelBuilder.Entity("Proiect.Models.Post", b =>
                 {
                     b.HasOne("Proiect.Models.ApplicationUser", "ApplicationUser")
@@ -549,8 +498,6 @@ namespace Proiect.Data.Migrations
             modelBuilder.Entity("Proiect.Models.Group", b =>
                 {
                     b.Navigation("Group_Members");
-
-                    b.Navigation("Group_Messages");
                 });
 
             modelBuilder.Entity("Proiect.Models.Post", b =>

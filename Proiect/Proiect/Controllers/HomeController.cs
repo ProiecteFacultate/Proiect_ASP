@@ -34,6 +34,7 @@ namespace Proiect.Controllers
                 ViewBag.Authenticated = true;
                 ViewBag.Id = id;
                 ViewBag.Friends = getFriendshipsData(id);
+                ViewBag.Groups = getGroups(id);
             }
             else
                 ViewBag.Authenticated = false;
@@ -98,6 +99,32 @@ namespace Proiect.Controllers
             }
 
             return friendsData;
+        }
+
+        ArrayList getGroups(string id)
+        {
+            ArrayList groupsData = new ArrayList();
+
+            var query1 = (from group_member in db.Group_Members
+                          where group_member.UserId == id
+                          select group_member);
+
+            foreach(var group_member in query1)
+            {
+                ArrayList data = new ArrayList();
+
+                var query2 = (from group2 in db.Groups
+                              where group2.Id == group_member.GroupId
+                              select group2.Name).SingleOrDefault();
+
+                data.Add(group_member.GroupId);
+                data.Add(query2).ToString();
+                data.Add(group_member.Role);
+
+                groupsData.Add(data);
+            }
+
+            return groupsData;
         }
     }
 }

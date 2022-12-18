@@ -1,0 +1,40 @@
+﻿@model Proiect.Models.Group
+
+<h2 class="text-center mt-5">Edit Group</h2>
+<br />
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            @using (Html.BeginForm(actionName: "Edit", controllerName: "Group",
+            method: FormMethod.Post,
+            routeValues: new { id = Model.Id }))  //we have id here because it should match with model attribute, id
+            {
+                /* @Html.HiddenFor(m => m.Id)  */
+
+
+                @Html.Label("Name", "Group Name")
+                <br />
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+                <br />
+
+                <br />
+
+                @Html.Label("Description", "Group Description")
+                    <br />
+                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })
+                    <br />
+
+                    <br />
+
+                <button class="btn btn-sm btn-success" type="submit">Edit Group</button>
+
+            }
+        </div>
+    </div>
+
+</div>
+

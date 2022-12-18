@@ -20,5 +20,11 @@ namespace Proiect.Data
         public DbSet<Post> Posts { get; set; }
 
         public DbSet<Post_Comment> Post_Comments { get; set; }
+
+        public DbSet<Group> Groups { get; set; }
+
+        public DbSet<Group_Member> Group_Members { get; set; }
+
+        public DbSet<Group_Message> Group_Messages { get; set; }
     }
 }

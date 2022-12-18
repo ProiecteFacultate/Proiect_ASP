@@ -47,6 +47,71 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "Create Group",
+    pattern: "Group/NewGroup",
+    defaults: new { controller = "Group", action = "NewGroup" });
+
+app.MapControllerRoute(
+    name: "Create Group [HttpPost]",
+    pattern: "Group/NewGroup/{newGroup}",
+    defaults: new { controller = "Group", action = "NewGroup" });
+
+app.MapControllerRoute(
+    name: "Show Group",
+    pattern: "Group/Show/{id}",
+    defaults: new { controller = "Group", action = "Show" });
+
+app.MapControllerRoute(
+    name: "Edit Group",
+    pattern: "Group/Edit/{id}",
+    defaults: new { controller = "Group", action = "Edit" });
+
+app.MapControllerRoute(
+    name: "Edit Group [HttpPost]",
+    pattern: "Group/Edit/{id}/{updatedGroup}",
+    defaults: new { controller = "Group", action = "Edit" });
+
+app.MapControllerRoute(
+    name: "Delete Group",
+    pattern: "Group/Delete/{id}",
+    defaults: new { controller = "Group", action = "Delete" });
+
+app.MapControllerRoute(
+    name: "Kick from Group",
+    pattern: "Group/Kick/{groupId}/{userId}",
+    defaults: new { controller = "Group", action = "Kick" });
+
+app.MapControllerRoute(
+    name: "Leave Group",
+    pattern: "Group/Leave/{groupId}/{userId}",
+    defaults: new { controller = "Group", action = "Leave" });
+
+app.MapControllerRoute(
+    name: "Add Group Message",
+    pattern: "GroupMessage/NewMessage/{groupId}",
+    defaults: new { controller = "GroupMessage", action = "NewMessage" });
+
+app.MapControllerRoute(
+    name: "Add Group Message [HttpPost]",
+    pattern: "GroupMessage/NewMessage/{groupId}/{newMessage}",
+     defaults: new { controller = "GroupMessage", action = "NewMessage" });
+
+app.MapControllerRoute(
+    name: "Edit Group Message",
+    pattern: "GroupMessage/Edit/{id}",
+    defaults: new { controller = "GroupMessage", action = "Edit" });
+
+app.MapControllerRoute(
+    name: "Edit Group Message [HttpPost]",
+    pattern: "GroupMessage/Edit/{id}/{updatedMessage}",
+    defaults: new { controller = "Group", action = "Edit" });
+
+app.MapControllerRoute(
+    name: "Delete Group Message",
+    pattern: "GroupMessage/Delete/{id}",
+    defaults: new { controller = "GroupMessage", action = "Delete" });
+
+app.MapControllerRoute(
     name: "Show Profile",
     pattern: "Profile/Show/{id}",
     defaults: new { controller = "Profile", action = "Show" });

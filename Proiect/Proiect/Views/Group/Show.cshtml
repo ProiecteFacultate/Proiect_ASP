@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Group Show";
+    @model Proiect.Models.Group
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">Group/Show</h1>
+    <p>Group Name: @ViewBag.GroupName</p>
+    <p>Description: @ViewBag.Description</p>
+
+    @if (ViewBag.Authenticated == true)
+    {
+        @if (ViewBag.IsMember == true)
+        {
+            <p>Rol: @ViewBag.RoleInGroup</p>
+            <a class="btn btn-outline-success" href="/Group/Leave/@ViewBag.GroupId/@ViewBag.CurrentUser">Leave Group</a>
+            <a class="btn btn-outline-success" href="/GroupMessage/NewMessage/@ViewBag.GroupId">Post Message</a>
+            <br />
+        }
+
+        @if (ViewBag.Role == "Admin" || (ViewBag.IsMember == true && ViewBag.RoleInGroup == "Admin"))
+        {
+            <a class="btn btn-outline-success" href="/Group/Delete/@ViewBag.GroupId">Delete Group</a>
+            <br />
+        }
+
+        @if (ViewBag.RoleInGroup == "Admin")
+        {
+            <a class="btn btn-outline-success" href="/Group/Edit/@ViewBag.GroupId">Edit Group</a>
+            <br />
+        }
+    }
+
+    <br />
+    <br />
+
+
+    @foreach(var member in ViewBag.Members)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
+
+                <div class="col-md-8">
+
+                    <div>
+
+                        <p>@member[1]</p>                      <!--Member Username-->
+                        <small>@member[2]</small>                       <!--Member role in group-->
+                        <br />
+
+                        @if (ViewBag.RoleInGroup == "Admin" && member[2] != "Admin")
+                        {
+                            <a class="btn btn-outline-success" href="/Group/Kick/@ViewBag.GroupId/@member[0]">Kick</a>
+                             <br />
+                        }
+                      
+                    </div>
+                    <br>
+
+                </div>
+
+                <div class="col-md-2"></div>
+
+            </div>
+
+        </div>
+
+        <hr />
+    }
+
+
+    @if (ViewBag.Authenticated == true && (ViewBag.IsMember == true || ViewBag.Role == "Admin"))
+    {
+        <h3>Messages</h3>
+        <br />
+        <br />
+
+        @foreach (var message in ViewBag.Messages)       //post[4] is the list of comments for the given post
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"></div>
+
+                    <div class="col-md-8">
+
+                        <div>
+
+                            <p>@message[1]</p>                      <!--Message sender username-->
+                            <small>@message[3]</small>                       <!--message Posted Date-->
+                            <br />
+                            @if(message[4] == "Active")     //Message status
+                            {
+                                <strong><i class="bi bi-person"></i>@message[2]</strong>      <!--Message body-->
+                            }
+                            else
+                            {
+                                <strong><i class="bi bi-person"></i>Message Deleted</strong>      
+                            }
+
+                            <br />
+
+                            @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == message[0] && ViewBag.IsMember == true && message[4] == "Active")     //message[0] is the message creator id
+                            {
+                                <a class="btn btn-outline-success" href="/GroupMessage/Edit/@message[5]">Edit Message</a>
+                                <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">Delete Message</a>
+                            }
+                            else if (ViewBag.Authenticated == true && ViewBag.IsMember == true && ViewBag.RoleInGroup == "Admin" && message[4] == "Active")
+                            {
+                                <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">Delete Message</a>
+                            }
+                            else if (ViewBag.Role == "Admin" && message[4] == "Active")
+                            {
+                                <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">Delete Message</a>
+                            }
+
+                        </div>
+                        <br>
+
+                    </div>
+
+                    <div class="col-md-2"></div>
+
+                </div>
+
+            </div>
+
+            <hr />
+        }
+    }
+
+</div>

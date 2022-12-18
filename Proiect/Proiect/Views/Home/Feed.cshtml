@@ -19,5 +19,21 @@
              <a class="btn btn-outline-success" href="/Profile/Show/@friend[0]">@friend[1]</a>
              <br />
         }
+
+        <br />
+        <br />
+
+        <h3>Groups</h3>
+
+        @foreach(var group in ViewBag.Groups)
+        {
+            <a class="btn btn-outline-success" href="/Group/Show/@group[0]">@group[1]</a>
+            <br />
+        }
+
+        <br />
+        <br />
+
+        <a class="btn btn-outline-success" href="/Group/NewGroup">To Create Group</a>
     }
 </div>

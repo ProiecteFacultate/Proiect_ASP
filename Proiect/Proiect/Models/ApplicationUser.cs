@@ -11,5 +11,7 @@ namespace Proiect.Models
         public virtual ICollection<Post>? Posts { get; set; }
 
         public virtual ICollection<Post_Comment>? Post_Comments { get; set; }
+
+        public virtual ICollection<Group_Member>? Group_Members { get; set; }
     }
 }
