@@ -271,6 +271,44 @@ namespace Proiect.Controllers
             return RedirectToAction("Warning", "Home");
         }
 
+        public IActionResult MakeAdmin(int groupId, string userId)         //the id of the user to be made admin
+        {
+            Group_Member isMember = (from group_member in db.Group_Members
+                                     where group_member.GroupId == groupId
+                                     && group_member.UserId == _userManager.GetUserId(User)
+                                     select group_member).SingleOrDefault();
+
+            Group_Member toBeMadAdminUserIsMember = (from group_member in db.Group_Members
+                                               where group_member.GroupId == groupId
+                                               && group_member.UserId == userId
+                                               select group_member).SingleOrDefault();
+
+
+            if (isMember != null && toBeMadAdminUserIsMember != null)
+            {
+                var roleInGroup = (from group_member in db.Group_Members
+                                   where group_member.GroupId == groupId
+                                   && group_member.UserId == _userManager.GetUserId(User)
+                                   select group_member.Role).SingleOrDefault();
+
+                var toBeMadAdminUserRoleInGroup = (from group_member in db.Group_Members
+                                             where group_member.GroupId == groupId
+                                             && group_member.UserId == userId
+                                             select group_member.Role).SingleOrDefault();
+
+                if (roleInGroup.ToString().Equals("Admin") && !toBeMadAdminUserRoleInGroup.ToString().Equals("Admin"))
+                {
+                    toBeMadAdminUserIsMember.Role = "Admin";
+                    db.SaveChanges();
+                    return RedirectToAction("Show", "Group", new { id = groupId });
+                }
+            }
+
+            //else 
+            TempData["message"] = "You can't make this member admin in this group!";
+            return RedirectToAction("Warning", "Home");
+        }
+
         public IActionResult Leave(int groupId, string userId)     //user to be kicked
         {
             if(userId == _userManager.GetUserId(User))

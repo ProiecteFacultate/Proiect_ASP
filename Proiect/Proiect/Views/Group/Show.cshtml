@@ -53,6 +53,7 @@
                         @if (ViewBag.RoleInGroup == "Admin" && member[2] != "Admin")
                         {
                             <a class="btn btn-outline-success" href="/Group/Kick/@ViewBag.GroupId/@member[0]">Kick</a>
+                            <a class="btn btn-outline-success" href="/Group/MakeAdmin/@ViewBag.GroupId/@member[0]">Make Admin</a>
                              <br />
                         }
                       

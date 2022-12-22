@@ -82,6 +82,11 @@ app.MapControllerRoute(
     defaults: new { controller = "Group", action = "Kick" });
 
 app.MapControllerRoute(
+    name: "Make Group Admin",
+    pattern: "Group/MakeAdmin/{groupId}/{userId}",
+    defaults: new { controller = "Group", action = "MakeAdmin" });
+
+app.MapControllerRoute(
     name: "Leave Group",
     pattern: "Group/Leave/{groupId}/{userId}",
     defaults: new { controller = "Group", action = "Leave" });

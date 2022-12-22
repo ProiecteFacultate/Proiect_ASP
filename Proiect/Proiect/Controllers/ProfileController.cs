@@ -54,6 +54,7 @@ namespace Proiect.Controllers
                 ViewBag.Authenticated = false;
 
             ViewBag.Id = id;            //the id of the requested profile, not hte one of the user that visits the profile
+            ViewBag.VisitorIsFriend = checkFriend(id);
             ViewBag.ProfileUsername = profile.ProfileUsername.ToString();
             ViewBag.Description = profile.Description.ToString();
             ViewBag.Privacy = profile.Privacy;
@@ -207,6 +208,21 @@ namespace Proiect.Controllers
             });
 
             return optionsList;
+        }
+
+        bool checkFriend(string id)      //the id of the visited profile
+        {
+            var query1 = (from friendship in db.Friendships
+                          where friendship.Friend_1_Key == id
+                          && friendship.Friend_2_Key == _userManager.GetUserId(User)
+                          select friendship).SingleOrDefault();
+
+            var query2 = (from friendship in db.Friendships
+                          where friendship.Friend_2_Key == id
+                          && friendship.Friend_1_Key == _userManager.GetUserId(User)
+                          select friendship).SingleOrDefault();
+
+            return query1 != null || query2 != null;
         }
     }
 }

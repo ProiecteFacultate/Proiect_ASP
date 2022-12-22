@@ -7,7 +7,7 @@
     <h1 class="display-4">Profile/Show</h1>
     <p>Profile Username: @ViewBag.ProfileUsername</p>
 
-    @if (ViewBag.Privacy == "Public" || (ViewBag.Authenticated == true && ((ViewBag.CurrentUser == ViewBag.Id) || ViewBag.Role == "Admin")))
+    @if (ViewBag.Privacy == "Public" || (ViewBag.Authenticated == true && ((ViewBag.CurrentUser == ViewBag.Id) || ViewBag.VisitorIsFriend == true || ViewBag.Role == "Admin")))
     {
         <p>Description: @ViewBag.Description</p>
 
