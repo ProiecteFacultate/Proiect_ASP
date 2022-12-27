@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Hosting;
 using Proiect.Data;
@@ -18,15 +19,18 @@ namespace Proiect.Controllers
     public class ProfileController : Controller
     {
         private readonly ApplicationDbContext db;
+        private IWebHostEnvironment _env;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         public ProfileController(
         ApplicationDbContext context,
+        IWebHostEnvironment env,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager
         )
         {
             db = context;
+            _env = env;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -60,6 +64,11 @@ namespace Proiect.Controllers
             ViewBag.Privacy = profile.Privacy;
             ViewBag.posts = getPosts(id);
 
+            if (profile.ProfileImage != null)
+                ViewBag.ProfileImage = "/images/profile/" + id + ".jpg";
+            else
+                ViewBag.ProfileImage = "/images/profile/default.jpg";
+
             return View();
         }
 
@@ -82,7 +91,7 @@ namespace Proiect.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(string id, Profile updatedProfile)       
+        public async Task<IActionResult> Edit(string id, Profile updatedProfile, IFormFile ProfileImage)       
         {
             Profile profile = db.Profiles.Find(id);
         
@@ -93,6 +102,19 @@ namespace Proiect.Controllers
                     profile.ProfileUsername = updatedProfile.ProfileUsername;
                     profile.Description = updatedProfile.Description;
                     profile.Privacy = updatedProfile.Privacy;
+
+                    if (ProfileImage.Length > 0)
+                    {
+                        var storagePath = Path.Combine(_env.WebRootPath, "images/profile", id + ".jpg");
+                        var databaseFileName = "/images/profile/" + id + ".jpg";
+                        using (var fileStream = new FileStream(storagePath, FileMode.Create))
+                        {
+                            await ProfileImage.CopyToAsync(fileStream);
+                        }
+
+                        profile.ProfileImage = databaseFileName;
+                    }
+
                     db.SaveChanges();
                     return RedirectToAction("Show", new { id = id });
                 }

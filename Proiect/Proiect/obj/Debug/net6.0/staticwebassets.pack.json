@@ -13,6 +13,18 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\group\\default.jpg",
+      "PackagePath": "staticwebassets\\images\\group\\default.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\profile\\d1567bd1-903a-4d83-b9a6-5961f4619079.jpg",
+      "PackagePath": "staticwebassets\\images\\profile\\d1567bd1-903a-4d83-b9a6-5961f4619079.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\profile\\default.jpg",
+      "PackagePath": "staticwebassets\\images\\profile\\default.jpg"
+    },
+    {
       "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

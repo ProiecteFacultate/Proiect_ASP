@@ -16,6 +16,8 @@ namespace Proiect.Models
         [StringLength(300, ErrorMessage = "Group description should be shorter than 300 characters")]
         public string Description { get; set; }
 
+        public string? GroupImage { get; set; }
+
         public virtual ICollection<Group_Member>? Group_Members { get; set; }
 
         public virtual ICollection<Group_Message>? Group_Messages { get; set; }

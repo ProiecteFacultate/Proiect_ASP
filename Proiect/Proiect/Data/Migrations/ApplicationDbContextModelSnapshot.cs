@@ -267,6 +267,9 @@ namespace Proiect.Data.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
+                    b.Property<string>("GroupImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -404,6 +407,9 @@ namespace Proiect.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Privacy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfileUsername")

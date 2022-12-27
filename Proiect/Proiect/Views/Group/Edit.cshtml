@@ -7,10 +7,8 @@
         <div class="col-md-6 offset-3">
             @using (Html.BeginForm(actionName: "Edit", controllerName: "Group",
             method: FormMethod.Post,
-            routeValues: new { id = Model.Id }))  //we have id here because it should match with model attribute, id
+            new { enctype = "multipart/form-data", id = Model.Id }))  //we have id here because it should match with model attribute, id
             {
-                /* @Html.HiddenFor(m => m.Id)  */
-
 
                 @Html.Label("Name", "Group Name")
                 <br />
@@ -29,6 +27,10 @@
                     <br />
 
                     <br />
+
+                @Html.TextBoxFor(m => m.GroupImage, new { type = "file"})
+
+                @Html.ValidationMessageFor(m => m.GroupImage, "", new { @class = "error" })
 
                 <button class="btn btn-sm btn-success" type="submit">Edit Group</button>
 

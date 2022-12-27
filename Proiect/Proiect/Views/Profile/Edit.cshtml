@@ -7,10 +7,8 @@
         <div class="col-md-6 offset-3">
             @using (Html.BeginForm(actionName: "Edit", controllerName: "Profile",
             method: FormMethod.Post,
-            routeValues: new { id = Model.Id }))  //we have id here because it should match with model attribute, id
+            new { enctype = "multipart/form-data", id = Model.Id }))  //we have id here because it should match with model attribute, id
             {
-                /* @Html.HiddenFor(m => m.Id)  */
-
 
                 @Html.Label("ProfileUsername", "Username")
                 <br />
@@ -37,6 +35,11 @@
 
                 <br />
                 <br />
+
+                @Html.TextBoxFor(m => m.ProfileImage, new { type = "file"})
+               
+                @Html.ValidationMessageFor(m => m.ProfileImage, "", new { @class = "error" })
+
 
                 <button class="btn btn-sm btn-success" type="submit">Change profile</button>
 

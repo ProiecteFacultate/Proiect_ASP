@@ -10,15 +10,18 @@ namespace Proiect.Controllers
     public class GroupController : Controller
     {
         private readonly ApplicationDbContext db;
+        private IWebHostEnvironment _env;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         public GroupController(
         ApplicationDbContext context,
+        IWebHostEnvironment env,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager
         )
         {
             db = context;
+            _env = env;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -70,6 +73,11 @@ namespace Proiect.Controllers
             ViewBag.Description = group.Description.ToString();
             ViewBag.Members = getGroupMembers(id);
             ViewBag.Messages = getMessages(id);
+
+            if (group.GroupImage != null)
+                ViewBag.GroupImage = "/images/group/" + id + ".jpg";
+            else
+                ViewBag.GroupImage = "/images/group/default.jpg";
 
             return View();
         }
@@ -152,7 +160,7 @@ namespace Proiect.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, Group updatedGroup)
+        public async Task<IActionResult> Edit(int id, Group updatedGroup, IFormFile GroupImage)
         {
             Group group = db.Groups.Find(id);
 
@@ -174,6 +182,19 @@ namespace Proiect.Controllers
                     {
                         group.Name = updatedGroup.Name;
                         group.Description = updatedGroup.Description;
+
+                        if (GroupImage.Length > 0)
+                        {
+                            var storagePath = Path.Combine(_env.WebRootPath, "images/group", id + ".jpg");
+                            var databaseFileName = "/images/group/" + id + ".jpg";
+                            using (var fileStream = new FileStream(storagePath, FileMode.Create))
+                            {
+                                await GroupImage.CopyToAsync(fileStream);
+                            }
+
+                            group.GroupImage = databaseFileName;
+                        }
+
                         db.SaveChanges();
                         return RedirectToAction("Feed", "Home");
                     }
