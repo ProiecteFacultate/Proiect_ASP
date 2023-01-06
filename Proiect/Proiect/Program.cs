@@ -132,6 +132,16 @@ app.MapControllerRoute(
     defaults: new { controller = "Profile", action = "Edit" });
 
 app.MapControllerRoute(
+    name: "Add Friend",
+    pattern: "Profile/AddFriend/{id}",
+    defaults: new { controller = "Profile", action = "AddFriend" });
+
+app.MapControllerRoute(
+    name: "Delete Friend",
+    pattern: "Profile/DeleteFriend/{id}",
+    defaults: new { controller = "Profile", action = "DeleteFriend" });
+
+app.MapControllerRoute(
     name: "Add Post",
     pattern: "Post/NewPost",
     defaults: new { controller = "Post", action = "NewPost" });
@@ -180,6 +190,16 @@ app.MapControllerRoute(
     name: "Delete Comment",
     pattern: "PostComment/Delete/{id}",
     defaults: new { controller = "PostComment", action = "Delete" });
+
+app.MapControllerRoute(
+    name: "Search User",
+    pattern: "SearchBar/UsersResults/{name}",
+    defaults: new { controller = "SearchBar", action = "UsersResults" });
+
+app.MapControllerRoute(
+    name: "Search Group",
+    pattern: "SearchBar/GroupsResults/{name}",
+    defaults: new { controller = "SearchBar", action = "GroupsResults" });
 
 app.MapControllerRoute(      
     name: "Warnings",

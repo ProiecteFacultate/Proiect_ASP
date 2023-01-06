@@ -4,62 +4,88 @@
 
 }
 
-<div class="text-center">
+<div class="text-center" style="border: 2px solid; border-radius: 10px; border-color: black;">
+
     <h1 class="display-4">Group/Show</h1>
-     <img src="@ViewBag.GroupImage" width="150" height=" 150"/>
-    <p>Group Name: @ViewBag.GroupName</p>
-    <p>Description: @ViewBag.Description</p>
+    <img src="@ViewBag.GroupImage" style="border-radius: 50%" width="170" height="170" />
+    <p style="font-family: Arial; color: white; text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black; font-size: 45px;">@ViewBag.GroupName</p>
+
+    <div style="height:fit-content; overflow:hidden; display:flex; justify-content:center; flex-direction:row">
+        <div class="card" style="border: 1px solid black; float: left; width: 80%; margin-left:15px">
+            <div class="card-body" style="">
+                <p style="font-family:Arial, Helvetica, sans-serif; font-size:19px; margin: 0 auto;">@ViewBag.Description</p>
+            </div>
+        </div>
+    </div>
 
     @if (ViewBag.Authenticated == true)
     {
-        @if (ViewBag.IsMember == true)
-        {
-            <p>Rol: @ViewBag.RoleInGroup</p>
-            <a class="btn btn-outline-success" href="/Group/Leave/@ViewBag.GroupId/@ViewBag.CurrentUser">Leave Group</a>
-            <a class="btn btn-outline-success" href="/GroupMessage/NewMessage/@ViewBag.GroupId">Post Message</a>
-            <br />
-        }
+        <br />
 
-        @if (ViewBag.Role == "Admin" || (ViewBag.IsMember == true && ViewBag.RoleInGroup == "Admin"))
-        {
-            <a class="btn btn-outline-success" href="/Group/Delete/@ViewBag.GroupId">Delete Group</a>
-            <br />
-        }
+        <div style="float: right; width: 20%; display: flex; flex-direction:row; justify-content:space-between; margin-left:auto; margin-right:20px;">
 
-        @if (ViewBag.RoleInGroup == "Admin")
-        {
-            <a class="btn btn-outline-success" href="/Group/Edit/@ViewBag.GroupId">Edit Group</a>
-            <br />
-        }
+            @if (ViewBag.IsMember == true)
+            {
+                //    <p>Rol: @ViewBag.RoleInGroup</p>
+                <a class="btn btn-outline-success" href="/Group/Leave/@ViewBag.GroupId/@ViewBag.CurrentUser">
+                    <img src="/images/leave.jpg" width="30" height="30">
+                </a>
+
+                <a class="btn btn-outline-success" href="/GroupMessage/NewMessage/@ViewBag.GroupId">
+                    <img src="/images/add.jpg" width="30" height="30">
+                </a>
+            }
+
+            @if (ViewBag.Role == "Admin" || (ViewBag.IsMember == true && ViewBag.RoleInGroup == "Admin"))
+            {
+                <a class="btn btn-outline-success" href="/Group/Delete/@ViewBag.GroupId">
+                    <img src="/images/delete.jpg" width="30" height="30">
+                </a>
+            }
+
+            @if (ViewBag.RoleInGroup == "Admin")
+            {
+                <a class="btn btn-outline-success" href="/Group/Edit/@ViewBag.GroupId">
+                    <img src="/images/edit.jpg" width="30" height="30">
+                </a>
+            }
+
+        </div>
     }
 
     <br />
     <br />
 
+    <hr />
 
-    @foreach(var member in ViewBag.Members)
+    @foreach (var member in ViewBag.Members)
     {
+
         <div class="container">
             <div class="row">
                 <div class="col-md-2"></div>
 
                 <div class="col-md-8">
 
-                    <div>
+                    <div style="">
 
-                        <p>@member[1]</p>                      <!--Member Username-->
-                        <small>@member[2]</small>                       <!--Member role in group-->
-                        <br />
-
+                        <p style="font-weight:bold">@member[1]</p>                      <!--Member Username-->
+                        <!--member[2] Member role in group-->
                         @if (ViewBag.RoleInGroup == "Admin" && member[2] != "Admin")
                         {
-                            <a class="btn btn-outline-success" href="/Group/Kick/@ViewBag.GroupId/@member[0]">Kick</a>
-                            <a class="btn btn-outline-success" href="/Group/MakeAdmin/@ViewBag.GroupId/@member[0]">Make Admin</a>
-                             <br />
+                            <div style="">
+
+                                <a class="btn btn-outline-success" href="/Group/Kick/@ViewBag.GroupId/@member[0]">
+                                    <img src="/images/leave.jpg" width="30" height="30">
+                                </a>
+
+                                <a class="btn btn-outline-success" href="/Group/MakeAdmin/@ViewBag.GroupId/@member[0]">
+                                    <img src="/images/upgrade.jpg" width="30" height="30">
+                                </a>
+                            </div>
                         }
-                      
+
                     </div>
-                    <br>
 
                 </div>
 
@@ -81,48 +107,58 @@
 
         @foreach (var message in ViewBag.Messages)       //post[4] is the list of comments for the given post
         {
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2"></div>
+            <div class="card">
+                <div class="card-body">
 
-                    <div class="col-md-8">
 
-                        <div>
-
-                            <p>@message[1]</p>                      <!--Message sender username-->
-                            <small>@message[3]</small>                       <!--message Posted Date-->
-                            <br />
-                            @if(message[4] == "Active")     //Message status
-                            {
-                                <strong><i class="bi bi-person"></i>@message[2]</strong>      <!--Message body-->
-                            }
-                            else
-                            {
-                                <strong><i class="bi bi-person"></i>Message Deleted</strong>      
-                            }
-
-                            <br />
-
-                            @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == message[0] && ViewBag.IsMember == true && message[4] == "Active")     //message[0] is the message creator id
-                            {
-                                <a class="btn btn-outline-success" href="/GroupMessage/Edit/@message[5]">Edit Message</a>
-                                <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">Delete Message</a>
-                            }
-                            else if (ViewBag.Authenticated == true && ViewBag.IsMember == true && ViewBag.RoleInGroup == "Admin" && message[4] == "Active")
-                            {
-                                <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">Delete Message</a>
-                            }
-                            else if (ViewBag.Role == "Admin" && message[4] == "Active")
-                            {
-                                <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">Delete Message</a>
-                            }
-
-                        </div>
-                        <br>
-
+                    <div>
+                        <h3 style="text-align:left; font-size:25px; font-weight:bold">@message[1]</h3>       <!--Message Creator Username-->
+                        <!--message[3] message Posted Date-->
                     </div>
 
-                    <div class="col-md-2"></div>
+                    <div class="card-title alert-success py-3 px-3 rounded-2" style="text-align:left; font-size:20px;">
+                        @if (message[4] == "Active")     //Message status
+                        {
+                            <strong><i class="bi bi-person"></i>@message[2]</strong>      <!--Message body-->
+                        }
+                        else
+                        {
+                            <strong><i class="bi bi-person"></i>Message Deleted</strong>
+                        }
+                    </div>       <!--Message Body-->
+
+                    <br />
+
+                    <div style="display:flex; flex-direction:row; justify-content:end">
+
+                        @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == message[0] && ViewBag.IsMember == true && message[4] == "Active")     //message[0] is the message creator id
+                        {
+                            <a class="btn btn-outline-success" href="/GroupMessage/Edit/@message[5]">
+                                <img src="/images/edit.jpg" width="30" height="30">
+                            </a>
+
+                            <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">
+                                <img src="/images/delete.jpg" width="30" height="30">
+                            </a>
+                        }
+                        else if (ViewBag.Authenticated == true && ViewBag.IsMember == true && ViewBag.RoleInGroup == "Admin" && message[4] == "Active")
+                        {
+                            <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">
+                                <img src="/images/delete.jpg" width="30" height="30">
+                            </a>
+
+                            <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">Delete Message</a>
+                        }
+                        else if (ViewBag.Role == "Admin" && message[4] == "Active")
+                        {
+                            <a class="btn btn-outline-success" href="/GroupMessage/Delete/@message[5]">
+                                <img src="/images/delete.jpg" width="30" height="30">
+                            </a>
+                        }
+
+                    </div>
+                    <br>
+
 
                 </div>
 
@@ -133,3 +169,6 @@
     }
 
 </div>
+
+
+

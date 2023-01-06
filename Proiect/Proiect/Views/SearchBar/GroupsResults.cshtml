@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Groups Results Page";
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">Groups Results</h1>
+    <a class="btn btn-outline-success" href="/SearchBar/UsersResults/@ViewBag.Name">Users</a>
+
+    @foreach (var group in ViewBag.Groups)
+    {
+            <a class="btn btn-outline-success" href="/Group/Show/@group[0]">
+                <h1>@group[1]</h1>
+                <img src="@group[2]" style="border-radius: 50%" width="170" height="170" />
+            </a>
+
+            <br />
+    }
+
+</div>

@@ -65,9 +65,9 @@ namespace Proiect.Controllers
             ViewBag.posts = getPosts(id);
 
             if (profile.ProfileImage != null)
-                ViewBag.ProfileImage = "/images/profile/" + id + ".jpg";
+                ViewBag.ProfileImage = "/UserAddedImages/profile/" + id + ".jpg";
             else
-                ViewBag.ProfileImage = "/images/profile/default.jpg";
+                ViewBag.ProfileImage = "/UserAddedImages/profile/default.jpg";
 
             return View();
         }
@@ -91,10 +91,10 @@ namespace Proiect.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, Profile updatedProfile, IFormFile ProfileImage)       
+        public async Task<IActionResult> Edit(string id, Profile updatedProfile, IFormFile? ProfileImage)       //IFormFile ProfileImage
         {
             Profile profile = db.Profiles.Find(id);
-        
+            Console.WriteLine(updatedProfile.Privacy);
             if (ModelState.IsValid)
             {
                 if (profile.Id == _userManager.GetUserId(User))
@@ -103,10 +103,10 @@ namespace Proiect.Controllers
                     profile.Description = updatedProfile.Description;
                     profile.Privacy = updatedProfile.Privacy;
 
-                    if (ProfileImage.Length > 0)
+                    if (ProfileImage != null)    //ProfileImage.Length > 0
                     {
-                        var storagePath = Path.Combine(_env.WebRootPath, "images/profile", id + ".jpg");
-                        var databaseFileName = "/images/profile/" + id + ".jpg";
+                        var storagePath = Path.Combine(_env.WebRootPath, "UserAddedImages/profile", id + ".jpg");
+                        var databaseFileName = "/UserAddedImages/profile/" + id + ".jpg";
                         using (var fileStream = new FileStream(storagePath, FileMode.Create))
                         {
                             await ProfileImage.CopyToAsync(fileStream);
@@ -130,7 +130,71 @@ namespace Proiect.Controllers
                 profile.Priv = getPrivacyOptions();
                 return View(updatedProfile);
             }
-        }     
+        }
+
+        public IActionResult AddFriend(string id)
+        {
+            if (User.Identity.IsAuthenticated == true)
+            {
+               if(checkFriend(id) == false)
+                {
+                    Friendship friendship = new Friendship();
+                    friendship.Friend_1_Key = _userManager.GetUserId(User);
+                    friendship.Friend_2_Key = id;
+                    db.Friendships.Add(friendship);
+                    db.SaveChanges();
+                    return RedirectToAction("Show", new { id = id });
+                }
+                else
+                {
+                    TempData["message"] = "You are already friends!";
+                    return RedirectToAction("Warning", "Home");
+                }
+
+            }
+            else
+            {
+                TempData["message"] = "You can't add friends as guest!";
+                return RedirectToAction("Warning", "Home");
+            }
+        }
+
+        public IActionResult DeleteFriend(string id)
+        {
+            if (User.Identity.IsAuthenticated == true)
+            {
+                if (checkFriend(id) == true)
+                {
+                    Friendship friendship1 = (from friendship in db.Friendships
+                                              where friendship.Friend_1_Key == id
+                                              && friendship.Friend_2_Key == _userManager.GetUserId(User)
+                                              select friendship).SingleOrDefault();
+                    if (friendship1 != null)
+                        db.Friendships.Remove(friendship1);
+
+                    Friendship friendship2 = (from friendship in db.Friendships
+                                              where friendship.Friend_2_Key == id
+                                              && friendship.Friend_1_Key == _userManager.GetUserId(User)
+                                              select friendship).SingleOrDefault();
+                    if (friendship2 != null)
+                        db.Friendships.Remove(friendship2);
+
+                    db.SaveChanges();
+                    return RedirectToAction("Show", new { id = id });
+                }
+                else
+                {
+                    TempData["message"] = "You are not friends!";
+                    return RedirectToAction("Warning", "Home");
+                }
+
+            }
+            else
+            {
+                TempData["message"] = "You can't delete friends as guest!";
+                return RedirectToAction("Warning", "Home");
+            }
+        }
 
         bool profileExists(string id)       //checks if profile already exists for the given user;   returns true if profile exists, false otherwise
         {

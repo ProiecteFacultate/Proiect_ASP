@@ -137,58 +137,5 @@ namespace Proiect.Controllers
                 return View(updatedMessage);
             }
         }
-
-        public IActionResult Delete(int id)           //the id of the message to be deleted
-        {
-            Group_Message message = (from message2 in db.Group_Messages
-                                    where message2.Id == id
-                                    select message2).SingleOrDefault();
-
-            Group_Member isMember = (from group_member in db.Group_Members
-                                     where group_member.GroupId == message.GroupId
-                                     && group_member.UserId == _userManager.GetUserId(User)
-                                     select group_member).SingleOrDefault();
-
-            if(isMember != null)
-            {
-                var roleInGroup = (from group_member in db.Group_Members
-                                   where group_member.GroupId == message.GroupId
-                                   && group_member.UserId == _userManager.GetUserId(User)
-                                   select group_member.Role).SingleOrDefault();
-
-                if (message.CreatorId == _userManager.GetUserId(User) || roleInGroup.ToString().Equals("Admin"))    //we still need to check if the user is member because he may send a message and then leave the group
-                {
-                    if(message.Status.Equals("Active"))
-                    {
-                        message.Status = "Deleted";
-                        db.SaveChanges();
-                        return RedirectToAction("Show", "Group", new { id = message.GroupId });
-                    }
-                    else
-                    {
-                        TempData["message"] = "This message was deleted!";
-                        return RedirectToAction("Warning", "Home");
-                    }
-                }
-            }
-            else if(User.IsInRole("Admin"))
-            {
-                if (message.Status.Equals("Active"))
-                {
-                    message.Status = "Deleted";
-                    db.SaveChanges();
-                    return RedirectToAction("Show", "Group", new { id = message.GroupId });
-                }
-                else
-                {
-                    TempData["message"] = "This message was deleted!";
-                    return RedirectToAction("Warning", "Home");
-                }
-            }
-
-            //else
-            TempData["message"] = "You can't delete this message!";
-            return RedirectToAction("Warning", "Home");
-        }
     }
 }

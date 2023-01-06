@@ -5,6 +5,26 @@
       "PackagePath": "staticwebassets\\Proiect.bundle.scp.css"
     },
     {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\UserAddedImages\\group\\8.jpg",
+      "PackagePath": "staticwebassets\\UserAddedImages\\group\\8.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\UserAddedImages\\group\\9.jpg",
+      "PackagePath": "staticwebassets\\UserAddedImages\\group\\9.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\UserAddedImages\\group\\default.jpg",
+      "PackagePath": "staticwebassets\\UserAddedImages\\group\\default.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\UserAddedImages\\profile\\d1567bd1-903a-4d83-b9a6-5961f4619079.jpg",
+      "PackagePath": "staticwebassets\\UserAddedImages\\profile\\d1567bd1-903a-4d83-b9a6-5961f4619079.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\UserAddedImages\\profile\\default.jpg",
+      "PackagePath": "staticwebassets\\UserAddedImages\\profile\\default.jpg"
+    },
+    {
       "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -13,16 +33,28 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\group\\default.jpg",
-      "PackagePath": "staticwebassets\\images\\group\\default.jpg"
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\add.jpg",
+      "PackagePath": "staticwebassets\\images\\add.jpg"
     },
     {
-      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\profile\\d1567bd1-903a-4d83-b9a6-5961f4619079.jpg",
-      "PackagePath": "staticwebassets\\images\\profile\\d1567bd1-903a-4d83-b9a6-5961f4619079.jpg"
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\addFriend.jpg",
+      "PackagePath": "staticwebassets\\images\\addFriend.jpg"
     },
     {
-      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\profile\\default.jpg",
-      "PackagePath": "staticwebassets\\images\\profile\\default.jpg"
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\delete.jpg",
+      "PackagePath": "staticwebassets\\images\\delete.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\edit.jpg",
+      "PackagePath": "staticwebassets\\images\\edit.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\leave.jpg",
+      "PackagePath": "staticwebassets\\images\\leave.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\upgrade.jpg",
+      "PackagePath": "staticwebassets\\images\\upgrade.jpg"
     },
     {
       "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\js\\site.js",

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Proiect.Data;
 using Proiect.Models;
 using System.Collections;
+using System.Diagnostics;
 
 namespace Proiect.Controllers
 {
@@ -75,9 +76,9 @@ namespace Proiect.Controllers
             ViewBag.Messages = getMessages(id);
 
             if (group.GroupImage != null)
-                ViewBag.GroupImage = "/images/group/" + id + ".jpg";
+                ViewBag.GroupImage = "/UserAddedImages/group/" + id + ".jpg";
             else
-                ViewBag.GroupImage = "/images/group/default.jpg";
+                ViewBag.GroupImage = "/UserAddedImages/group/default.jpg";
 
             return View();
         }
@@ -97,7 +98,7 @@ namespace Proiect.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewGroup(Group newGroup)
+        public async Task<IActionResult> NewGroup(Group newGroup, IFormFile? GroupImage)
         {
             if (ModelState.IsValid)
             {
@@ -106,10 +107,24 @@ namespace Proiect.Controllers
                     db.Groups.Add(newGroup);
                     db.SaveChanges();
 
+                    if (GroupImage != null)
+                    {
+                        var storagePath = Path.Combine(_env.WebRootPath, "UserAddedImages/group/", newGroup.Id + ".jpg");
+                        var databaseFileName = "/UserAddedImages/group/" + newGroup.Id + ".jpg";
+                        using (var fileStream = new FileStream(storagePath, FileMode.Create))
+                        {
+                            await GroupImage.CopyToAsync(fileStream);
+                        }
+
+                        newGroup.GroupImage = databaseFileName;
+                        db.SaveChanges();
+                    }
+
                     Group_Member groupMember = new Group_Member();
                     groupMember.GroupId = newGroup.Id;
                     groupMember.UserId = _userManager.GetUserId(User);
                     groupMember.Role = "Admin";
+                 
                     db.Group_Members.Add(groupMember);
                     db.SaveChanges();
                     return RedirectToAction("Feed", "Home");
@@ -160,7 +175,7 @@ namespace Proiect.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, Group updatedGroup, IFormFile GroupImage)
+        public async Task<IActionResult> Edit(int id, Group updatedGroup, IFormFile? GroupImage)
         {
             Group group = db.Groups.Find(id);
 
@@ -183,10 +198,10 @@ namespace Proiect.Controllers
                         group.Name = updatedGroup.Name;
                         group.Description = updatedGroup.Description;
 
-                        if (GroupImage.Length > 0)
+                        if (GroupImage != null)
                         {
-                            var storagePath = Path.Combine(_env.WebRootPath, "images/group", id + ".jpg");
-                            var databaseFileName = "/images/group/" + id + ".jpg";
+                            var storagePath = Path.Combine(_env.WebRootPath, "UserAddedImages/group", id + ".jpg");
+                            var databaseFileName = "/UserAddedImages/group/" + id + ".jpg";
                             using (var fileStream = new FileStream(storagePath, FileMode.Create))
                             {
                                 await GroupImage.CopyToAsync(fileStream);

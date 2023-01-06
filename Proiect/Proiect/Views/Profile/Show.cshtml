@@ -1,33 +1,42 @@
 ﻿@{
     ViewData["Title"] = "Profile Page";
     @model Proiect.Models.Post
-}
 
-<div class="text-center">
-    <h1 class="display-4">Profile/Show</h1>
-    <img src="@ViewBag.ProfileImage" width="150" height=" 150"/>
-    <p>Profile Username: @ViewBag.ProfileUsername</p>
+}
+<div class="text-center" style="border: 2px solid; border-radius: 10px; border-color: black;">
+    <br />
+    <img src="@ViewBag.ProfileImage" style="border-radius: 50%" width="170" height="170" />
+    <p style="font-family: Arial; color: white; text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black; font-size: 45px;">@ViewBag.ProfileUsername</p>
 
     @if (ViewBag.Privacy == "Public" || (ViewBag.Authenticated == true && ((ViewBag.CurrentUser == ViewBag.Id) || ViewBag.VisitorIsFriend == true || ViewBag.Role == "Admin")))
     {
-        <p>Description: @ViewBag.Description</p>
+        <div style="height:fit-content; overflow:hidden; display:flex; justify-content:center; flex-direction:row">
+            <div class="card" style="border: 1px solid black; float: left; width: 80%; margin-left:15px">
+                <div class="card-body" style="">
+                    <p style="font-family:Arial, Helvetica, sans-serif; font-size:19px; margin: 0 auto;">@ViewBag.Description</p>
+                </div>
+            </div>
 
-        @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == ViewBag.Id)  //ViewBag.Id is the id of the profile, ViewBag.CurrentUser is the id of the user who visits the profile
-        {
-            <a class="btn btn-outline-success" href="/Profile/Edit/@ViewBag.Id">Edit Profile</a>
-        }
+            @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == ViewBag.Id)  //ViewBag.Id is the id of the profile, ViewBag.CurrentUser is the id of the user who visits the profile
+            {
+                <div style="float: right; width: 20%; display: flex; flex-direction:row; justify-content:space-between; align-items:center; padding-left:15px; padding-right:15px">
+                    <a class="btn btn-outline-success" href="/Profile/Edit/@ViewBag.Id">
+                        <img src="/images/edit.jpg" width="30" height="30">
+                    </a>
 
-        @if (ViewBag.Authenticated == true && (ViewBag.CurrentUser == ViewBag.Id))         // add post
-        {
-            <a class="btn btn-outline-success" href="/Post/NewPost">Add Post</a>
-        }
+                    <br />
+                    <br />
+
+                    <a class="btn btn-outline-success" href="/Post/NewPost">
+                        <img src="/images/add.jpg" width="30" height="30">
+                    </a>
+                </div>
+            }
+
+        </div>
 
         <br />
-        <br />
-        <br />
-
-        <h2>Posts</h2>
-
+        <hr />
         <br />
         <br />
 
@@ -38,39 +47,51 @@
                 <div class="card-body">
 
 
-                    <h3 class="card-title alert-success py-3 px-3 rounded-2">@post[1]</h3>       <!--Post Creator Username-->
-
-                    <div class="card-text">@post[2]</div>       <!--Post Body-->
-
-                    <div class="d-flex justify-content-between flex-row mt-5">
-
-                        <span class="alert-success">@post[3]</span>              <!--Post Posted Date-->
-
+                    <div>
+                        <h3 style="text-align:left; font-size:25px; font-weight:bold">@post[1]</h3>       <!--Post Creator Username-->
+                        <!--<p class="alert-success" style="text-align:left">@post[3]</p>     -->             <!--Post Posted Date-->
                     </div>
 
-                    @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == ViewBag.Id)  //ViewBag.Id is the id of the profile, ViewBag.CurrentUser is the id of the user who visits the profile
-                    {
-                        <a class="btn btn-outline-success" href="/Post/Edit/@post[0]">Edit Post</a>           
-                        <a class="btn btn-outline-success" href="/Post/Delete/@post[0]">Delete Post</a>
-                    }
-                    else if(ViewBag.Role == "Admin")
-                    {
-                        <a class="btn btn-outline-success" href="/Post/Delete/@post[0]">Delete Post</a>
-                    }
+                    <div class="card-title alert-success py-3 px-3 rounded-2" style="text-align:left; font-size:20px;">@post[2]</div>       <!--Post Body-->
+                    <div style="display:flex; flex-direction:row; justify-content:end">
+                        @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == ViewBag.Id)  //ViewBag.Id is the id of the profile, ViewBag.CurrentUser is the id of the user who visits the profile
+                        {
+                            <div>
+                                <a class="btn btn-outline-success" href="/Post/Edit/@post[0]">
+                                    <!--post[0] is post id-->
+                                    <img src="/images/edit.jpg" width="30" height="30">
+                                </a>
 
-                    <br />
-                     @if (ViewBag.Authenticated == true)         // add post
-                     {
-                           <a class="btn btn-outline-success" href="/PostComment/NewComment/@post[0]">Add Comment</a>        <!--post[0] is post id-->
-                     }
+                                <a class="btn btn-outline-success" href="/Post/Delete/@post[0]">
+                                    <!--post[0] is post id-->
+                                    <img src="/images/delete.jpg" width="30" height="30">
+                                </a>
+                            </div>
+                        }
+                        else if (ViewBag.Role == "Admin")
+                        {
+                            <a class="btn btn-outline-success" href="/Post/Delete/@post[0]">
+                                <!--post[0] is post id-->
+                                <img src="/images/delete.jpg" width="30" height="30">
+                            </a>
+                        }
 
-                     <br />
-                     <hr />
+                        @if (ViewBag.Authenticated == true)         // add post
+                        {
+                            <a class="btn btn-outline-success" href="/PostComment/NewComment/@post[0]">
+                                <!--post[0] is post id-->
+                                <img src="/images/add.jpg" width="30" height="30">
+                            </a>
 
-                     <div class="comments">                          <!--Comments-->
-                           
-                         @foreach(var comment in post[4])       //post[4] is the list of comments for the given post
-                        {                     
+                        }
+                    </div>
+
+                    <hr />
+
+                    <div class="comments">
+                        <!--Comments-->
+                        @foreach (var comment in post[4])       //post[4] is the list of comments for the given post
+                        {
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-2"></div>
@@ -79,23 +100,30 @@
 
                                         <div>
 
-                                            <p>@comment[1]</p>                      <!--Comment Creator Username-->
-                                            <small>@comment[3]</small>                       <!--Comment Posted Date-->
-                                            <br />
-                                            <strong><i class="bi bi-person"></i>@comment[2]</strong>      <!--Comment Message-->
+                                            <div>
+                                                <h3 style="text-align:left; font-size:20px; font-weight:bold">@comment[1]</h3>       <!--Comment Creator Username-->
+                                            </div>
+                                            <div class="card-title alert-success py-3 px-3 rounded-2" style="text-align:left; font-size:15px;">@comment[2]</div>       <!--Comment Body-->
 
-                                            @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == comment[4])     //comment[4] is the comment creator id
-                                            {
-                                                <a class="btn btn-outline-success" href="/PostComment/Edit/@comment[0]">Edit Comment</a>
-                                                <a class="btn btn-outline-success" href="/PostComment/Delete/@comment[0]">Delete Comment</a>
-                                            }
-                                            else if (ViewBag.Role == "Admin")
-                                            {
-                                                <a class="btn btn-outline-success" href="/PostComment/Delete/@comment[0]">Delete Comment</a>
-                                            }
+                                            <div style="display:flex; flex-direction:row; justify-content:end">
+                                                @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == comment[4])     //comment[4] is the comment creator id
+                                                {
+                                                    <a class="btn btn-outline-success" href="/PostComment/Edit/@comment[0]">
+                                                        <img src="/images/edit.jpg" width="30" height="30">
+                                                    </a>
 
+                                                    <a class="btn btn-outline-success" href="/PostComment/Delete/@comment[0]">
+                                                        <img src="/images/delete.jpg" width="30" height="30">
+                                                    </a>
+                                                }
+                                                else if (ViewBag.Role == "Admin")
+                                                {
+                                                    <a class="btn btn-outline-success" href="/PostComment/Delete/@comment[0]">
+                                                        <img src="/images/delete.jpg" width="30" height="30">
+                                                    </a>
+                                                }
+                                            </div>
                                         </div>
-                                        <br>
 
                                     </div>
 
@@ -123,6 +151,20 @@
         <br />
 
         <h2>This profile is private!</h2>
+        <br />
     }
 
+    @if (ViewBag.Authenticated == true && (ViewBag.CurrentUser != ViewBag.Id) && ViewBag.VisitorIsFriend == false)
+    {
+        <a class="btn btn-outline-success" href="/Profile/AddFriend/@ViewBag.Id">
+            <img src="/images/addFriend.jpg" width="30" height="30">
+        </a>
+    }
+    else if
+    (ViewBag.Authenticated == true && (ViewBag.CurrentUser != ViewBag.Id) && ViewBag.VisitorIsFriend == true)
+    {
+        <a class="btn btn-outline-success" href="/Profile/DeleteFriend/@ViewBag.Id">
+            <img src="/images/delete.jpg" width="30" height="30">
+        </a>
+    }
 </div>

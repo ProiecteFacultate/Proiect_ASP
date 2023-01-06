@@ -1,8 +1,7 @@
 ﻿@model  Proiect.Models.Profile
-
-<h2 class="text-center mt-5">Editare Profil</h2>
-<br />
-<div class="container mt-5">
+<div class="card-title alert-success py-3 px-3 rounded-2">
+    <h2 class="text-center mt-5" style="font-weight:bold">Edit Profile</h2>
+    <br />
     <div class="row">
         <div class="col-md-6 offset-3">
             @using (Html.BeginForm(actionName: "Edit", controllerName: "Profile",
@@ -40,6 +39,9 @@
                
                 @Html.ValidationMessageFor(m => m.ProfileImage, "", new { @class = "error" })
 
+                <br/>
+                <br/>
+                <br />
 
                 <button class="btn btn-sm btn-success" type="submit">Change profile</button>
 

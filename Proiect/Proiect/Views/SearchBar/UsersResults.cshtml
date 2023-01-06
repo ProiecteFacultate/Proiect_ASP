@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Users Results Page";
+
+}
+<div class="text-center">
+    <h1 class="display-4">Users Results</h1>
+    <a class="btn btn-outline-success" href="/SearchBar/GroupsResults/@ViewBag.Name">Grupuri</a>
+
+    @foreach (var profile in ViewBag.Profiles)
+    {
+        <a class="btn btn-outline-success" href="/Profile/Show/@profile[0]">
+            <h1>@profile[1]</h1>
+            <img src="@profile[2]" style="border-radius: 50%" width="170" height="170" />
+        </a>
+
+        <br />
+    }
+
+</div>
