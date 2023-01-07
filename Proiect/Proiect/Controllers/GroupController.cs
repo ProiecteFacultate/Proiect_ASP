@@ -345,7 +345,7 @@ namespace Proiect.Controllers
             return RedirectToAction("Warning", "Home");
         }
 
-        public IActionResult Leave(int groupId, string userId)     //user to be kicked
+        public IActionResult Leave(int groupId, string userId)     //user to leave
         {
             if(userId == _userManager.GetUserId(User))
             {
@@ -358,7 +358,7 @@ namespace Proiect.Controllers
                 {
                     db.Group_Members.Remove(member);
                     db.SaveChanges();
-                    return RedirectToAction("Feed", "Home");
+                    return RedirectToAction("Show", "Group", new { id = groupId });
                 }
                 else
                 {
@@ -369,6 +369,39 @@ namespace Proiect.Controllers
             else
             {
                 TempData["message"] = "You can't make other members leave from this group!";
+                return RedirectToAction("Warning", "Home");
+            }
+        }
+
+        public IActionResult Join(int groupId, string userId)     //user to join
+        {
+            if (userId == _userManager.GetUserId(User))
+            {
+                Group_Member member = new Group_Member();
+                member.GroupId = groupId;
+                member.UserId = userId;
+                member.Role = "Member";
+
+                Group_Member memberExist = (from group_member in db.Group_Members
+                                       where group_member.GroupId == groupId
+                                       && group_member.UserId == userId
+                                       select group_member).SingleOrDefault();
+
+                if (memberExist == null)
+                {
+                    db.Group_Members.Add(member);
+                    db.SaveChanges();
+                    return RedirectToAction("Show", "Group", new {id = groupId});
+                }
+                else
+                {
+                    TempData["message"] = "You are already in this group!";
+                    return RedirectToAction("Warning", "Home");
+                }
+            }
+            else
+            {
+                TempData["message"] = "You can't make other users join this group!";
                 return RedirectToAction("Warning", "Home");
             }
         }

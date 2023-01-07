@@ -95,10 +95,20 @@ namespace Proiect.Controllers
                 var username = (from profile in db.Profiles
                                 where profile.Id == friendsId[i]
                                 select profile.ProfileUsername).SingleOrDefault();
+                
+                var profileImage = (from profile in db.Profiles
+                                    where profile.Id == friendsId[i]
+                                    select profile.ProfileImage).SingleOrDefault();
 
                 ArrayList data = new ArrayList();
                 data.Add(friendsId[i]);
                 data.Add(username.ToString());
+
+                if (profileImage != null)
+                    data.Add("/UserAddedImages/profile/" + friendsId[i] + ".jpg");
+                else
+                    data.Add(ViewBag.ProfileImage = "/UserAddedImages/profile/default.jpg");
+
                 friendsData.Add(data);
             }
 
@@ -121,9 +131,18 @@ namespace Proiect.Controllers
                               where group2.Id == group_member.GroupId
                               select group2.Name).SingleOrDefault();
 
+
+                var groupImage = (from group2 in db.Groups
+                              where group2.Id == group_member.GroupId
+                              select group2.GroupImage).SingleOrDefault();
+
                 data.Add(group_member.GroupId);
                 data.Add(query2).ToString();
-                data.Add(group_member.Role);
+
+                if (groupImage != null)
+                    data.Add("/UserAddedImages/group/" + group_member.GroupId + ".jpg");
+                else
+                    data.Add("/UserAddedImages/group/default.jpg");
 
                 groupsData.Add(data);
             }

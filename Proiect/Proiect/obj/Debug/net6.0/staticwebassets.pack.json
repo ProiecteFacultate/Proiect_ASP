@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Proiect.bundle.scp.css"
     },
     {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\UserAddedImages\\group\\19.jpg",
+      "PackagePath": "staticwebassets\\UserAddedImages\\group\\19.jpg"
+    },
+    {
       "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\UserAddedImages\\group\\8.jpg",
       "PackagePath": "staticwebassets\\UserAddedImages\\group\\8.jpg"
     },
@@ -47,6 +51,10 @@
     {
       "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\edit.jpg",
       "PackagePath": "staticwebassets\\images\\edit.jpg"
+    },
+    {
+      "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\enter.jpg",
+      "PackagePath": "staticwebassets\\images\\enter.jpg"
     },
     {
       "Id": "D:\\Facultate\\II\\ASP\\Proiect_ASP\\Proiect\\Proiect\\wwwroot\\images\\leave.jpg",

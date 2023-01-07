@@ -11,96 +11,106 @@
     <p style="font-family: Arial; color: white; text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black; font-size: 45px;">@ViewBag.GroupName</p>
 
     <div style="height:fit-content; overflow:hidden; display:flex; justify-content:center; flex-direction:row">
-        <div class="card" style="border: 1px solid black; float: left; width: 80%; margin-left:15px">
+        <div class="card" style="border: 1px solid black; float: left; width: 70%; margin-left:15px">
             <div class="card-body" style="">
                 <p style="font-family:Arial, Helvetica, sans-serif; font-size:19px; margin: 0 auto;">@ViewBag.Description</p>
             </div>
         </div>
+
+
+        @if (ViewBag.Authenticated == true)
+        {
+            <br />
+
+            <div style="float: right; width: 30%; display: flex; flex-direction:row; justify-content:space-between; align-items:center; padding-left:15px; padding-right:15px">
+
+                @if (ViewBag.IsMember == true)
+                {
+                    //    <p>Rol: @ViewBag.RoleInGroup</p>
+                    <a class="btn btn-outline-success" href="/Group/Leave/@ViewBag.GroupId/@ViewBag.CurrentUser">
+                        <img src="/images/leave.jpg" width="30" height="30">
+                    </a>
+
+                    <a class="btn btn-outline-success" href="/GroupMessage/NewMessage/@ViewBag.GroupId">
+                        <img src="/images/add.jpg" width="30" height="30">
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-outline-success" href="/Group/Join/@ViewBag.GroupId/@ViewBag.CurrentUser">
+                        <img src="/images/enter.jpg" width="30" height="30">
+                    </a>
+                }
+
+                @if (ViewBag.Role == "Admin" || (ViewBag.IsMember == true && ViewBag.RoleInGroup == "Admin"))
+                {
+                    <a class="btn btn-outline-success" href="/Group/Delete/@ViewBag.GroupId">
+                        <img src="/images/delete.jpg" width="30" height="30">
+                    </a>
+                }
+
+                @if (ViewBag.RoleInGroup == "Admin")
+                {
+                    <a class="btn btn-outline-success" href="/Group/Edit/@ViewBag.GroupId">
+                        <img src="/images/edit.jpg" width="30" height="30">
+                    </a>
+                }
+
+            </div>
+        }
+
     </div>
-
-    @if (ViewBag.Authenticated == true)
-    {
-        <br />
-
-        <div style="float: right; width: 20%; display: flex; flex-direction:row; justify-content:space-between; margin-left:auto; margin-right:20px;">
-
-            @if (ViewBag.IsMember == true)
-            {
-                //    <p>Rol: @ViewBag.RoleInGroup</p>
-                <a class="btn btn-outline-success" href="/Group/Leave/@ViewBag.GroupId/@ViewBag.CurrentUser">
-                    <img src="/images/leave.jpg" width="30" height="30">
-                </a>
-
-                <a class="btn btn-outline-success" href="/GroupMessage/NewMessage/@ViewBag.GroupId">
-                    <img src="/images/add.jpg" width="30" height="30">
-                </a>
-            }
-
-            @if (ViewBag.Role == "Admin" || (ViewBag.IsMember == true && ViewBag.RoleInGroup == "Admin"))
-            {
-                <a class="btn btn-outline-success" href="/Group/Delete/@ViewBag.GroupId">
-                    <img src="/images/delete.jpg" width="30" height="30">
-                </a>
-            }
-
-            @if (ViewBag.RoleInGroup == "Admin")
-            {
-                <a class="btn btn-outline-success" href="/Group/Edit/@ViewBag.GroupId">
-                    <img src="/images/edit.jpg" width="30" height="30">
-                </a>
-            }
-
-        </div>
-    }
 
     <br />
     <br />
 
     <hr />
 
-    @foreach (var member in ViewBag.Members)
-    {
-
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2"></div>
-
-                <div class="col-md-8">
-
-                    <div style="">
-
-                        <p style="font-weight:bold">@member[1]</p>                      <!--Member Username-->
-                        <!--member[2] Member role in group-->
-                        @if (ViewBag.RoleInGroup == "Admin" && member[2] != "Admin")
-                        {
-                            <div style="">
-
-                                <a class="btn btn-outline-success" href="/Group/Kick/@ViewBag.GroupId/@member[0]">
-                                    <img src="/images/leave.jpg" width="30" height="30">
-                                </a>
-
-                                <a class="btn btn-outline-success" href="/Group/MakeAdmin/@ViewBag.GroupId/@member[0]">
-                                    <img src="/images/upgrade.jpg" width="30" height="30">
-                                </a>
-                            </div>
-                        }
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-2"></div>
-
-            </div>
-
-        </div>
-
-        <hr />
-    }
-
 
     @if (ViewBag.Authenticated == true && (ViewBag.IsMember == true || ViewBag.Role == "Admin"))
     {
+
+        @foreach (var member in ViewBag.Members)
+        {
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"></div>
+
+                    <div class="col-md-8">
+
+                        <div style="">
+
+                            <p style="font-weight:bold">@member[1]</p>                      <!--Member Username-->
+                            <!--member[2] Member role in group-->
+                            @if (ViewBag.RoleInGroup == "Admin" && member[2] != "Admin")
+                            {
+                                <div style="">
+
+                                    <a class="btn btn-outline-success" href="/Group/Kick/@ViewBag.GroupId/@member[0]">
+                                        <img src="/images/leave.jpg" width="30" height="30">
+                                    </a>
+
+                                    <a class="btn btn-outline-success" href="/Group/MakeAdmin/@ViewBag.GroupId/@member[0]">
+                                        <img src="/images/upgrade.jpg" width="30" height="30">
+                                    </a>
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2"></div>
+
+                </div>
+
+            </div>
+
+            <hr />
+        }
+
+
         <h3>Messages</h3>
         <br />
         <br />

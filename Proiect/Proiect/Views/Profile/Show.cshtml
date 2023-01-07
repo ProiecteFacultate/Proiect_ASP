@@ -8,18 +8,39 @@
     <img src="@ViewBag.ProfileImage" style="border-radius: 50%" width="170" height="170" />
     <p style="font-family: Arial; color: white; text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black; font-size: 45px;">@ViewBag.ProfileUsername</p>
 
+    @if (ViewBag.Authenticated == true && ViewBag.CurrentUser != ViewBag.Id)
+    {
+        <br />
+        if (ViewBag.VisitorIsFriend == false)
+        {
+            <a class="btn btn-outline-success" href="/Profile/AddFriend/@ViewBag.Id">
+                <img src="/images/addFriend.jpg" width="30" height="30">
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-outline-success" href="/Profile/DeleteFriend/@ViewBag.Id">
+                <img src="/images/delete.jpg" width="30" height="30">
+            </a>
+        }
+        <br />
+        <br />
+        <br />
+    }
+
     @if (ViewBag.Privacy == "Public" || (ViewBag.Authenticated == true && ((ViewBag.CurrentUser == ViewBag.Id) || ViewBag.VisitorIsFriend == true || ViewBag.Role == "Admin")))
     {
         <div style="height:fit-content; overflow:hidden; display:flex; justify-content:center; flex-direction:row">
-            <div class="card" style="border: 1px solid black; float: left; width: 80%; margin-left:15px">
+            <div class="card" style="border: 1px solid black; float: left; width: 70%; margin-left:15px">
                 <div class="card-body" style="">
                     <p style="font-family:Arial, Helvetica, sans-serif; font-size:19px; margin: 0 auto;">@ViewBag.Description</p>
                 </div>
             </div>
 
+
             @if (ViewBag.Authenticated == true && ViewBag.CurrentUser == ViewBag.Id)  //ViewBag.Id is the id of the profile, ViewBag.CurrentUser is the id of the user who visits the profile
             {
-                <div style="float: right; width: 20%; display: flex; flex-direction:row; justify-content:space-between; align-items:center; padding-left:15px; padding-right:15px">
+                <div style="float: right; width: 30%; display: flex; flex-direction:row; justify-content:space-between; align-items:center; padding-left:15px; padding-right:15px">
                     <a class="btn btn-outline-success" href="/Profile/Edit/@ViewBag.Id">
                         <img src="/images/edit.jpg" width="30" height="30">
                     </a>
@@ -147,24 +168,8 @@
     }
     else
     {
-        <br />
-        <br />
-
         <h2>This profile is private!</h2>
-        <br />
     }
 
-    @if (ViewBag.Authenticated == true && (ViewBag.CurrentUser != ViewBag.Id) && ViewBag.VisitorIsFriend == false)
-    {
-        <a class="btn btn-outline-success" href="/Profile/AddFriend/@ViewBag.Id">
-            <img src="/images/addFriend.jpg" width="30" height="30">
-        </a>
-    }
-    else if
-    (ViewBag.Authenticated == true && (ViewBag.CurrentUser != ViewBag.Id) && ViewBag.VisitorIsFriend == true)
-    {
-        <a class="btn btn-outline-success" href="/Profile/DeleteFriend/@ViewBag.Id">
-            <img src="/images/delete.jpg" width="30" height="30">
-        </a>
-    }
+
 </div>

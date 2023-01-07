@@ -1,47 +1,90 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     @model Proiect.Models.Post
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Home/Index</h1>
-    @if (ViewBag.Authenticated == true)           
+<div class="text-center" style="margin: 0;">
+
+
+
+
+    @if (ViewBag.Authenticated == true)
     {
-        <form action="/SearchBar/UsersResults" method="post">
-            <laber for="name">Introduceti numele:</laber>
-            <input type="text" name="name" />
-            <br />
-            <input type="submit" name="submit" value="Search" />
-        </form>
+        <div id="p-header" style="display:flex;text-align:center;">
 
-        <a class="btn btn-outline-success" href="/Profile/Show/@ViewBag.Id">To Profile/Show</a>
+            <div id="c1-header" style="flex: 33%;text-align:left">
+                <form action="/SearchBar/UsersResults" method="post">
+                    <laber for="name">Introduceti numele:</laber>
+                    <input type="text" name="name" />
+                    <br />
+                    <input type="submit" name="submit" value="Search" />
+                </form>
+            </div>
 
-        <br />
-        <br />
-        <h3>Friends</h3>
+            <div id="c2-header" style="flex: 33%;">
+                <h1 class="display-4">Home</h1>
+            </div>
 
-        <br />
-        @foreach (var friend in ViewBag.Friends)       //ViewBag.Friends is an ArrayList of ArrayLists, so var friend is an ArrayList, but in Razor we don't have Arraylists so we use var
-        {
-             <a class="btn btn-outline-success" href="/Profile/Show/@friend[0]">@friend[1]</a>
-             <br />
-        }
+            <div id="c3-header" style="flex: 33%;text-align:right">
+                <a class="btn btn-outline-success" href="/Profile/Show/@ViewBag.Id">To Profile/Show</a>
+            </div>
 
-        <br />
-        <br />
+        </div>
 
-        <h3>Groups</h3>
 
-        @foreach(var group in ViewBag.Groups)
-        {
-            <a class="btn btn-outline-success" href="/Group/Show/@group[0]">@group[1]</a>
-            <br />
-        }
 
         <br />
         <br />
+        <br />
+        <br />
+        <br />
+        <div id="p" style="display: flex;text-align:center;">
 
-        <a class="btn btn-outline-success" href="/Group/NewGroup">To Create Group</a>
+            <div id="c1" style="flex: 50%;margin-left:0;text-align:left">
+                <h3>Friends</h3>
+
+                @foreach (var friend in ViewBag.Friends)       //ViewBag.Friends is an ArrayList of ArrayLists, so var friend is an ArrayList, but in Razor we don't have Arraylists so we use var
+                {
+                    <a class="btn btn-outline-success" href="/Profile/Show/@friend[0]" style="width:80px; display:flex; justify-content:center">
+                        <div style="width:80px; padding-left:10px; padding-right:10px">
+                            <p style="font-size:13px; font-weight:bold; overflow: hidden; text-overflow: ellipsis; white-space:nowrap">@friend[1]</p>   <!--username-->
+                            <img src="@friend[2]" style="border-radius:50%;" width="18" height="18" />        <!--profile image-->
+                        </div>
+                    </a>
+
+                    <br />
+                }
+            </div>
+
+            <div id="c2" style="flex:50%;margin-right:0;text-align:right;">
+                <h3>Groups</h3>
+
+                @foreach (var group in ViewBag.Groups)
+                {
+                    <a class="btn btn-outline-success" href="/Group/Show/@group[0]" style="width:80px; display:flex; justify-content:center; align-self:flex-start">
+                        <div style="width:80px; padding-left:10px; padding-right:10px;">
+                            <p style="font-size:13px; font-weight:bold; overflow: hidden; text-overflow: ellipsis; white-space:nowrap">@group[1]</p>  <!--group name-->
+                            <img src="@group[2]" style="border-radius:50%;" width="18" height="18" />          <!--group image-->
+                        </div>
+                    </a>
+
+                    <br />
+                }
+
+                <br />
+                <br />
+                <a class="btn btn-outline-success" href="/Group/NewGroup">To Create Group</a>
+            </div>
+        </div>
+
+
+    }
+    else
+    {
+        <div id="c1-header">
+            <h1 class="display-4">Home</h1>
+        </div>
     }
 
     @foreach (var post in ViewBag.Posts)           //display posts

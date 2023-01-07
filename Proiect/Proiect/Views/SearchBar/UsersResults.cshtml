@@ -3,17 +3,26 @@
 
 }
 <div class="text-center">
-    <h1 class="display-4">Users Results</h1>
-    <a class="btn btn-outline-success" href="/SearchBar/GroupsResults/@ViewBag.Name">Grupuri</a>
+    <div id="pp" style="display: flex">
+        <div id="c1" style="text-align:left; margin: 0;flex: 50%;">
+            <h1 class="display-4">Users Results</h1>
+        </div>
 
-    @foreach (var profile in ViewBag.Profiles)
-    {
-        <a class="btn btn-outline-success" href="/Profile/Show/@profile[0]">
-            <h1>@profile[1]</h1>
-            <img src="@profile[2]" style="border-radius: 50%" width="170" height="170" />
-        </a>
+        <div id="c2" style="text-align:center; margin: 0;flex: 50%;">
+            <a class="btn btn-outline-success" href="/SearchBar/GroupsResults/@ViewBag.Name">Show Grupuri</a>
+        </div>
+    </div>
 
-        <br />
-    }
+    <div id="c3" style="text-align:left; margin: 0;">
+        @foreach (var profile in ViewBag.Profiles)
+        {
+            <a class="btn btn-outline-success" href="/Profile/Show/@profile[0]">
+                <h1>@profile[1]</h1>
+                <img src="@profile[2]" style="border-radius: 50%" width="170" height="170" />
+            </a>
+
+            <br />
+        }
+    </div>
 
 </div>

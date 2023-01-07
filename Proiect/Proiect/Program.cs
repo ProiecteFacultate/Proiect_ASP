@@ -92,6 +92,11 @@ app.MapControllerRoute(
     defaults: new { controller = "Group", action = "Leave" });
 
 app.MapControllerRoute(
+    name: "Join Group",
+    pattern: "Group/Join/{groupId}/{userId}",
+    defaults: new { controller = "Group", action = "Join" });
+
+app.MapControllerRoute(
     name: "Add Group Message",
     pattern: "GroupMessage/NewMessage/{groupId}",
     defaults: new { controller = "GroupMessage", action = "NewMessage" });
