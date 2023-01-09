@@ -117,6 +117,7 @@ namespace Proiect.Controllers
                         }
 
                         newGroup.GroupImage = databaseFileName;
+
                         db.SaveChanges();
                     }
 

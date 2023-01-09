@@ -5,25 +5,29 @@
 
 <div id="p" class="text-center">
     <div id="pp" style="display: flex">
-        <div id="c1" style="text-align:left; margin: 0;flex: 50%;">
-        <h1 class="display-4">Groups Results</h1>
-        </div>
+
 
         <div id="c2" style="text-align:center; margin: 0;flex: 50%;">
             <a class="btn btn-outline-success" href="/SearchBar/UsersResults/@ViewBag.Name">Show Users</a>
         </div>
     </div>
+    <br />
+    <br />
 
-    <div id="c3" style="text-align:left; margin: 0;">
-    @foreach (var group in ViewBag.Groups)
-    {
-            <a class="btn btn-outline-success" href="/Group/Show/@group[0]">
-                <h1>@group[1]</h1>
-                <img src="@group[2]" style="border-radius: 50%" width="170" height="170" />
-            </a>
 
-            <br />
-    }
+     <div id="c3" style="display: flex; justify-content:center; flex-direction:column;">
+        @foreach (var group in ViewBag.Groups)
+        {
+            <a class="btn btn-outline-success" href="/Group/Show/@group[0]" style="width:180px; height:140px; justify-content:center; display:flex; margin-left:auto; margin-right:auto; margin-bottom:25px;">
+                    <div style="width:180px; height:180px; padding-left:15px; padding-right:15px; align-items:center">
+                    <p style="font-size:25px; font-weight:bold; overflow: hidden; text-overflow: ellipsis; white-space:nowrap">@group[1]</p>    <!--group name-->
+                        <img src="@group[2]" style="border-radius:50%;" width="60" height="60" />        <!--group image-->
+                    </div>
+                </a>
+
+                <br />
+                <br />
+        }
     </div>
 
 </div>
